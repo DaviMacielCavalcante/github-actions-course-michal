@@ -1,13 +1,15 @@
-name: "01 Hello World"
+name: "Hello World"
 
 on:
   workflow_dispatch:  # This event triggers the workflow manually
 
 jobs:
-  say_hello_job:
+  sing-a-song:
     runs-on: ubuntu-latest  # The runner environment (Ubuntu in this case)
 
     steps:
-      - name: Echo Hello World
-        run: echo "Hello, World!"
+      - name: lonlyness
+        run: echo "Quero uma mulher pra chamar de minha!"
+      - name: lonlyness-2
+        run: echo "Quero alguém pra dividir a vida!"
 
