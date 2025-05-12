@@ -1,0 +1,15 @@
+name: "lonlyness"  
+
+on:
+  workflow_dispatch:  # This event triggers the workflow manually
+
+jobs:
+  sing-a-song:
+    runs-on: ubuntu-latest  # The runner environment (Ubuntu in this case)
+
+    steps:
+      - name: lonlyness
+        run: echo "Quero uma mulher pra chamar de minha!"
+      - name: lonlyness-2
+        run: echo "Quero alguém pra dividir a vida!"
+
