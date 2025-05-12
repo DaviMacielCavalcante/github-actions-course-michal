@@ -1,0 +1,36 @@
+name: Testando condicionais
+
+on:
+  workflow_dispatch:  
+
+jobs:
+  example_job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "Conhecendo laufey"
+        id: "primeira_vez"
+        run: |
+          echo "nao achei nada"
+          exit 0  
+        shell: bash  
+
+      - name: "Conhecendo o album 'Everything I Know About Love'"
+        if: ${{ success() }}  # Only run this step if the previous step succeeded
+        run: |
+          echo "Conforme eu fui escutando eu fui gostando"
+
+      - name: Depois da metade do album eu comecei a gostar
+        run: |
+          echo "gostando"
+
+      - name: "Gostei agora, quero mais"
+        run: |
+          echo "Laufey conseguiu me tranquilizar"
+
+      - name: "Caso eu não goste"
+        if: ${{ failure() }}
+        run: |
+          echo "Foi mal pablo, n gostei"
+          exit 1
+
