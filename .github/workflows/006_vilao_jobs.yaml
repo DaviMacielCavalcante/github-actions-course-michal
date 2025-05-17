@@ -1,0 +1,25 @@
+name: Testando passar dados entre jobs
+
+on:
+  workflow_dispatch:
+
+jobs:
+  wolfChildren:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Wolfchildren
+        id: movie
+        # This step will set the output name for this step to Michal
+        run: |
+          echo "name=The movie Wolf Children is" >> $GITHUB_OUTPUT
+    outputs:
+      name: ${{ steps.movie.outputs.name }}
+
+  data-receiver:
+    runs-on: ubuntu-22.04
+    needs: ["wolfChildren"] # In order to have data for receiver sender needs to first produce some data.
+    steps:
+      - name: cry
+        # Notice how we use needs object to access the sender job's outputs
+        run: | 
+          echo I cried when i saw ${{ needs.wolfChildren.outputs.name }} 
