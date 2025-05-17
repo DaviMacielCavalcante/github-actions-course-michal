@@ -1,0 +1,24 @@
+name: Testando workflow com input
+
+on:
+  workflow_dispatch:
+    inputs:
+      username:
+        description: 'Username'
+        default: 'Davi'
+        required: true
+        type: string
+      age:
+        description: 'Age'
+        default: 27
+        required: true
+        type: number
+
+jobs:
+  echo-username-age:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo Username and Age
+        run: |
+          echo "Username: ${{ inputs.username }}"
+          echo "Age: ${{ inputs.age }}"

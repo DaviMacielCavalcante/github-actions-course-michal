@@ -1,0 +1,18 @@
+name: Testando workflow acionado por outro workflow
+
+on:
+  workflow_run:
+    workflows: ["Testando workflow com input"]
+    types:
+      - completed
+
+jobs:
+  echo-hi-all:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo "Hello there!"
+        run: |
+          echo "Hello there!"
+      - name: Echo "General Kenobi!"
+        run: |
+          echo "General Kenobi!"
