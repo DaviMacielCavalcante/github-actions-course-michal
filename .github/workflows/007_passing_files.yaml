@@ -1,5 +1,4 @@
 name: 07 Passing Files In Artifacts
-
 on:
   workflow_dispatch:
     
@@ -9,42 +8,31 @@ jobs:
     steps:
       - name: Checkout source code 
         uses: actions/checkout@v4
-
       - name: Install Python 3.10
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v4
         with:
           python-version: '3.10'
-
-      - name: Install dependencies
+      - name: Install tox
+        run: pip install tox
+      - name: Run unit tests
         run: |
           cd backend
-          # Instala todas as dependências necessárias explicitamente
-          pip install httpx fastapi pytest pytest-cov
-          # Se você tem um requirements.txt ou pyproject.toml:
-          pip install -e .  # Ou: pip install -r requirements.txt
-
-      - name: Run tests with coverage
-        run: |
-          cd backend
-          python -m pytest --cov=. --cov-report= tests/
-          ls -la .coverage  # Verifica se o arquivo foi criado
-
-      - name: Upload coverage artifact
-        uses: actions/upload-artifact@v4
+          tox -e unit
+          find . -name ".coverage"  # Verificar onde o arquivo realmente está
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
         with:
           name: coverage
-          path: backend/.coverage
-
+          path: backend/.coverage  # Caminho relativo
+  
   load-file-example:
     runs-on: ubuntu-22.04
     needs: [unit-tests]
     steps:
       - name: Download artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v3
         with:
           name: coverage
-
-      - name: Show downloaded files
-        run: |
-          ls -la
-          ls -la coverage/
+          path: ${{ github.workspace }}
+      - name: List folder 
+        run: ls -la ${{ github.workspace }}
