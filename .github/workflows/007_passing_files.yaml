@@ -18,19 +18,20 @@ jobs:
         run: |
           cd backend
           tox -e unit
-          find . -name ".coverage"  # Verificar onde o arquivo realmente está
+          # Verificar que o arquivo .coverage existe
+          ls -la .coverage
       - name: Upload artifact
-        uses: actions/upload-artifact@v4  # Atualizado para v4
+        uses: actions/upload-artifact@v4
         with:
           name: coverage
-          path: backend/.coverage  # Caminho relativo
+          path: backend/.coverage  # Caminho correto verificado pelo output
   
   load-file-example:
     runs-on: ubuntu-22.04
     needs: [unit-tests]
     steps:
       - name: Download artifact
-        uses: actions/download-artifact@v4  # Atualizado para v4
+        uses: actions/download-artifact@v4
         with:
           name: coverage
           path: ${{ github.workspace }}
