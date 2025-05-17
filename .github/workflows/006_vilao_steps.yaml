@@ -1,0 +1,17 @@
+name: Testando passar dados entre steps
+
+on:
+  workflow_dispatch:
+
+jobs:
+  data-passing:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Create General Grievous
+        id: generalGrievous
+        run: |
+          echo "name=Kenobi" >> $GITHUB_OUTPUT
+
+      - name: Jedi Master
+        run: | 
+          echo General ${{ steps.generalGrievous.outputs.name }}
