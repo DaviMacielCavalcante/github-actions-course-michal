@@ -20,11 +20,13 @@ jobs:
           tox -e unit
           # Verificar que o arquivo .coverage existe
           ls -la .coverage
+          # Como o arquivo está aqui, precisamos copiá-lo para um local acessível no próximo step
+          cp .coverage ../coverage-file
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: coverage
-          path: backend/.coverage  # Caminho correto verificado pelo output
+          path: coverage-file  # Arquivo copiado no step anterior
   
   load-file-example:
     runs-on: ubuntu-22.04
