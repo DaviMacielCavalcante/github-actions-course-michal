@@ -18,8 +18,10 @@ jobs:
       - name: Install dependencies
         run: |
           cd backend
-          pip install -e .  # Instala o pacote em modo desenvolvimento
-          pip install tox pytest-cov fastapi pytest  # Instala dependências explicitamente
+          # Instala todas as dependências necessárias explicitamente
+          pip install httpx fastapi pytest pytest-cov
+          # Se você tem um requirements.txt ou pyproject.toml:
+          pip install -e .  # Ou: pip install -r requirements.txt
 
       - name: Run tests with coverage
         run: |
