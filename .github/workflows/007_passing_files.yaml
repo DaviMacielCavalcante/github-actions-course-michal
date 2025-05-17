@@ -17,24 +17,21 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install tox
-          pip install pytest-cov  # Certifique-se que o pytest-cov está instalado
+          cd backend
+          pip install -e .  # Instala o pacote em modo desenvolvimento
+          pip install tox pytest-cov fastapi pytest  # Instala dependências explicitamente
 
-      - name: Run unit tests with coverage
+      - name: Run tests with coverage
         run: |
           cd backend
-          # Gera o coverage explicitamente
           python -m pytest --cov=. --cov-report= tests/
-          # Verifica onde o .coverage foi gerado
-          find . -name ".coverage" -type f
-          ls -la
+          ls -la .coverage  # Verifica se o arquivo foi criado
 
       - name: Upload coverage artifact
         uses: actions/upload-artifact@v4
         with:
           name: coverage
           path: backend/.coverage
-
 
   load-file-example:
     runs-on: ubuntu-22.04
