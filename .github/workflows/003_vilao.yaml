@@ -1,0 +1,26 @@
+name: testando jobs paralelos
+
+on:
+  workflow_dispatch:  
+
+jobs:
+  linting:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Petting
+        run: echo "Petting the cat..."
+
+  unit_tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Tap ninja
+        run: echo "Tapping the ninja..."
+
+  integration_tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setting up for idle games
+        run: echo "Setting up games environment..."
+
+      - name: Cookie clicker
+        run: echo "Clicking cookies..."
