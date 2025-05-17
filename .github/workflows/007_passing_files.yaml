@@ -17,17 +17,20 @@ jobs:
 
       - name: Install tox
         run: pip install tox
+        
       - name: Run unit tests
         run: |
           cd backend
           tox -e unit
-          ls -la ${{ github.workspace }}/backend
+          # Verifica explicitamente se o arquivo .coverage foi criado
+          ls -la .coverage || echo "Arquivo .coverage não encontrado"
+          pwd  # Mostra o diretório atual para debug
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: .coverage
-          path: ${{ github.workspace }}/backend/.coverage
+          name: coverage
+          path: backend/.coverage  # Caminho relativo ao workspace
   
   load-file-example:
     runs-on: ubuntu-22.04
@@ -37,7 +40,8 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: coverage
-          path: ${{ github.workspace }}
 
       - name: List folder 
-        run: ls -la ${{ github.workspace }}
+        run: |
+          ls -la
+          ls -la coverage/
