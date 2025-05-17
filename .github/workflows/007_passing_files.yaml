@@ -20,7 +20,7 @@ jobs:
           tox -e unit
           find . -name ".coverage"  # Verificar onde o arquivo realmente está
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4  # Atualizado para v4
         with:
           name: coverage
           path: backend/.coverage  # Caminho relativo
@@ -30,7 +30,7 @@ jobs:
     needs: [unit-tests]
     steps:
       - name: Download artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4  # Atualizado para v4
         with:
           name: coverage
           path: ${{ github.workspace }}
