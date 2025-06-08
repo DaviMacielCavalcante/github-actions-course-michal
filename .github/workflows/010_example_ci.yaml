@@ -103,7 +103,7 @@ jobs:
           output: 'trivy-results.json'
           severity: 'CRITICAL,HIGH'
       - name: Upload results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: trivy-results
           path: ${{ github.workspace }}/trivy-results.json
