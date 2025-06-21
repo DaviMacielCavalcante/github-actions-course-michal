@@ -1,4 +1,4 @@
-name: Self-hosted Runners
+name: 15 Self-hosted Runners
 
 on:
   workflow_dispatch:
@@ -9,67 +9,22 @@ jobs:
     steps:
       - name: Checkout source code 
         uses: actions/checkout@v4
-      
       - name: Install Python 3.10
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
-      
       - name: Install tox
         run: pip install tox
-      
       - name: Run unit tests
         run: |
           cd backend
           tox -e unit
-          ls -la ${{ github.workspace }}/backend
-      
-      # DEBUGGING: Let's see exactly where we are and what files exist
-      - name: Debug file locations
-        run: |
-          echo "=== Current working directory ==="
-          pwd
-          echo ""
-          echo "=== Files in current directory ==="
-          ls -la
-          echo ""
-          echo "=== Files in backend directory ==="
-          ls -la backend/
-          echo ""
-          echo "=== Search for .coverage files everywhere ==="
-          find . -name ".coverage" -type f 2>/dev/null || echo "No .coverage files found"
-          echo ""
-          echo "=== Workspace variable ==="
-          echo "GITHUB_WORKSPACE: ${{ github.workspace }}"
-          echo ""
-          echo "=== Files in workspace/backend ==="
-          ls -la "${{ github.workspace }}/backend/" || echo "Directory not found"
-      
-      # Try different path approaches
-      - name: Upload coverage artifact (Attempt 1 - relative path)
+
+      - name: Copy coverage file
+        run: cp backend/.coverage ./coverage-report.dat
+
+      - name: Upload coverage
         uses: actions/upload-artifact@v4
         with:
-          name: coverage-attempt1
-          path: backend/.coverage
-        continue-on-error: true
-      
-      - name: Upload coverage artifact (Attempt 2 - absolute path)
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage-attempt2  
-          path: ${{ github.workspace }}/backend/.coverage
-        continue-on-error: true
-      
-      - name: Upload coverage artifact (Attempt 3 - working directory)
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage-attempt3
-          path: .coverage
-        continue-on-error: true
-      
-      - name: Upload coverage artifact (Attempt 4 - find with wildcard)
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage-attempt4
-          path: "**/backend/.coverage"
-        continue-on-error: true
+          name: coverage-report
+          path: coverage-report.dat
