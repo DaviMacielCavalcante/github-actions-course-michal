@@ -24,6 +24,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: coverage
-          path: |
-            backend/.coverage
-            backend/.tox/unit/.pytest_cache/
+          path: backend/.coverage
